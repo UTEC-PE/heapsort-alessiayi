@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 }
 
 int generateRandomInt(int min, int max) {
-    uniform_int_distribution<mt19937::result_type> distribution(min, max); 
+    uniform_int_distribution<mt19937::result_type> distribution(min, max);
     return distribution(rng);
 }
 
@@ -48,8 +48,32 @@ void printArray(int *array, size_t size) {
     cout << endl;
 }
 
-void heapsort(int* array, size_t size) {
-    // TODO
+void heapify(int arr[], int size, int curr){
+  int max = curr;
+  int left = 2*curr + 1;
+  int right = 2*curr + 2;
+
+  if (left < size && arr[left] > arr[max]){
+    max = left;
+  }
+  if (right < size && arr[right] > arr[max]){
+    max = right;
+  }
+  if (max != curr){
+    swap(arr[curr], arr[max]);
+    heapify(arr, size, max);
+  }
+}
+
+void heapsort(int* arr, size_t size) {
+  for (int i = size / 2 - 1; i >= 0; i--){
+    heapify(arr, size, i);
+  }
+  for (int i=size-1; i>=0; i--){
+      swap(arr[0], arr[i]);
+      heapify(arr, i, 0);
+  }
+
 }
 
 bool validate(int* array, size_t size) {
